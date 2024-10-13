@@ -1,0 +1,31 @@
+1. Which field of the Customers table is the primary key?
+
+Answer: The Cnum field is most likely the primary key of the CUSTOMERS table. Primary keys are unique identifiers for each row in a table. Given the context and common naming conventions, Cnum is a suitable candidate for the primary key.
+
+2. What is the 4th column of the Customers table?
+
+Answer: The 4th column of the CUSTOMERS table is Rating.
+
+3. What is another word for row? For column?
+
+Answer:
+
+Another word for row is record.
+Another word for column is field.
+
+4. Why isn’t it possible to see the first five rows of a table?
+
+Answer: This statement is incorrect. It is generally possible to see the first five rows of a table using SQL query statements. For example, in most database systems, you can use the SELECT statement with a LIMIT clause to specify the number of rows to retrieve.
+
+For instance, to see the first five rows of the CUSTOMERS table, you could use the following query:
+
+
+SELECT * FROM CUSTOMERS LIMIT 5;
+
+This would display the first five rows of the table.
+
+If you are unable to see the first five rows, it might be due to:
+
+Access restrictions: You might not have the necessary permissions to view the table's data.
+Data volume: If the table contains a very large number of rows, it might take longer to load the initial data.
+Database configuration: There might be specific settings or configurations in your database that are preventing you from viewing the data.
