@@ -1,0 +1,189 @@
+SQL Exercise que 1,2,3,4
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 37
+Server version: 8.0.39 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> create database DBT;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| dbt                |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use dbt;
+Database changed
+mysql> CREATE TABLE SEMP (
+    ->     EMPNO CHAR(4),
+    ->     EMPNAME CHAR(20),
+    ->     BASIC FLOAT,
+    ->     DEPTNO CHAR(2),
+    ->     DEPTHEAD CHAR(4)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE TABLE SDEPT (
+    ->     DEPTNO CHAR(2),
+    ->     DEPTNAME CHAR(15)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO SDEPT VALUES
+    ->     ('10', 'Development'),
+    ->     ('20', 'Training');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO SEMP VALUES
+    ->     ('0001', 'SUNIL', 6000, '10', '0001'),
+    ->     ('0002', 'HIREN', 8000, '20', '0002'),
+    ->     ('0003', 'ALI', 4000, '10', '0001'),
+    ->     ('0004', 'GEORGE', 6000, '20', '0002');
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> desc SEMP;
++----------+----------+------+-----+---------+-------+
+| Field    | Type     | Null | Key | Default | Extra |
++----------+----------+------+-----+---------+-------+
+| EMPNO    | char(4)  | YES  |     | NULL    |       |
+| EMPNAME  | char(20) | YES  |     | NULL    |       |
+| BASIC    | float    | YES  |     | NULL    |       |
+| DEPTNO   | char(2)  | YES  |     | NULL    |       |
+| DEPTHEAD | char(4)  | YES  |     | NULL    |       |
++----------+----------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from SEMP;
++-------+---------+-------+--------+----------+
+| EMPNO | EMPNAME | BASIC | DEPTNO | DEPTHEAD |
++-------+---------+-------+--------+----------+
+| 0001  | SUNIL   |  6000 | 10     | 0001     |
+| 0002  | HIREN   |  8000 | 20     | 0002     |
+| 0003  | ALI     |  4000 | 10     | 0001     |
+| 0004  | GEORGE  |  6000 | 20     | 0002     |
++-------+---------+-------+--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> desc SDEPT;
++----------+----------+------+-----+---------+-------+
+| Field    | Type     | Null | Key | Default | Extra |
++----------+----------+------+-----+---------+-------+
+| DEPTNO   | char(2)  | YES  |     | NULL    |       |
+| DEPTNAME | char(15) | YES  |     | NULL    |       |
++----------+----------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from SDEPT;
++--------+-------------+
+| DEPTNO | DEPTNAME    |
++--------+-------------+
+| 10     | Development |
+| 20     | Training    |
++--------+-------------+
+2 rows in set (0.00 sec)
+
+mysql>
+show databases;
+use dbt;
+show tables;
+CREATE TABLE SUPPLIER (
+    S_num VARCHAR(2) PRIMARY KEY,  -- Renamed column to avoid reserved word issues
+    S_name VARCHAR(50),             -- Renamed column to avoid reserved word issues
+    Status INT,
+    City VARCHAR(50)
+);
+
+
+INSERT INTO SUPPLIER (S_num, S_name, Status, City) VALUES
+('S1', 'Supplier A', 10, 'London'),
+('S2', 'Supplier B', 20, 'Paris'),
+('S3', 'Supplier C', 30, 'Athens'),
+('S4', 'Supplier D', 25, 'London'),
+('S5', 'Supplier E', 15, 'Berlin');
+CREATE TABLE PARTS (
+    P_num VARCHAR(2) PRIMARY KEY,
+    P_name VARCHAR(50),
+    Color VARCHAR(20),
+    Weight INT,
+    City VARCHAR(50)
+);
+
+INSERT INTO PARTS (P_num, P_name, Color, Weight, City) VALUES
+('P1', 'Part A', 'Red', 12, 'London'),
+('P2', 'Part B', 'Blue', 14, 'Paris'),
+('P3', 'Part C', 'Green', 13, 'Athens'),
+('P4', 'Part D', 'Yellow', 15, 'Berlin');
+
+CREATE TABLE PROJECTS (
+    J_num VARCHAR(2) PRIMARY KEY,
+    J_name VARCHAR(50),
+    City VARCHAR(50)
+);
+CREATE TABLE SPJ (
+    S_num VARCHAR(2),
+    P_num VARCHAR(2),
+    J_num VARCHAR(2),
+    Qty INT,
+    PRIMARY KEY (S_num, P_num, J_num)
+    );
+    INSERT INTO SPJ (S_num, P_num, J_num, Qty) VALUES
+('S1', 'P1', 'J1', 10),
+('S2', 'P2', 'J2', 20),
+('S3', 'P3', 'J3', 15),
+('S4', 'P4', 'J1', 5);
+SELECT * FROM SUPPLIER;
+SELECT S_num, S_name FROM SUPPLIER;
+SELECT P_name, Color FROM PARTS WHERE City = 'London';
+SELECT * FROM SUPPLIER WHERE City IN ('Paris', 'Athens');
+
+SELECT * FROM PROJECTS WHERE City = 'Athens';
+SELECT P_name FROM PARTS WHERE Weight BETWEEN 12 AND 14;
+SELECT * FROM SUPPLIER WHERE Status >= 20;
+SELECT * FROM SUPPLIER WHERE City <> 'London';
+SELECT DISTINCT City FROM SUPPLIER;
+SELECT P_name, Weight / 1000.0 AS Weight_KG FROM PARTS;
+SELECT 
+    P_name, 
+    Weight * 1000 AS Weight_MG,  -- Convert grams to milligrams
+    Weight / 1000.0 AS Weight_KG   -- Convert grams to kilograms
+FROM 
+    PARTS;
+
+
+
+
+
+
+

@@ -1,0 +1,30 @@
+show databases;
+use dbt;
+show tables;
+SELECT MIN(Status) AS MinStatus FROM SUPPLIER;
+SELECT MAX(Weight) AS MaxWeight FROM PARTS;
+SELECT AVG(Weight) AS AvgWeight FROM PARTS;
+SELECT SUM(Qty) AS TotalQuantitySold FROM SPJ WHERE P_num = 'P1';
+SELECT P_num, SUM(Qty) AS TotalQuantitySold FROM SPJ GROUP BY P_num;
+SELECT P_num, AVG(Qty) AS AvgQuantitySold FROM SPJ GROUP BY P_num;
+SELECT P_num, MAX(Qty) AS MaxQuantitySold 
+FROM SPJ 
+GROUP BY P_num 
+HAVING MAX(Qty) > 800;
+SELECT Status, COUNT(*) AS SupplierCount 
+FROM SUPPLIER 
+GROUP BY Status;
+SELECT City, COUNT(*) AS ProjectCount 
+FROM PROJECTS 
+GROUP BY City;
+SELECT 
+    CASE 
+        WHEN Status = 10 THEN 'Ten'
+        WHEN Status = 20 THEN 'Twenty'
+        WHEN Status = 30 THEN 'Thirty'
+        ELSE 'Other'
+    END AS Status,
+    COUNT(*) AS Count
+FROM SUPPLIER
+GROUP BY Status
+ORDER BY Status;  -- Ensures the output is in order of status values

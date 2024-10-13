@@ -1,0 +1,19 @@
+show databases;
+use dbt;
+show tables;
+SELECT CONCAT(UPPER(LEFT(S_name, 1)), LOWER(SUBSTRING(S_name, 2))) AS CapitalizedName FROM SUPPLIER;
+SELECT UPPER(S_name) AS UpperCaseName FROM SUPPLIER;
+SELECT LOWER(S_name) AS LowerCaseName FROM SUPPLIER;
+SELECT lpda (S_name, 25) AS PaddedName FROM SUPPLIER;
+SELECT REPLACE(REPLACE(S_name, 'l', 'r'), 'a', 'o') AS ModifiedName FROM SUPPLIER;
+SELECT S_name, LENGTH(S_name) AS NameLength FROM SUPPLIER;
+SELECT * FROM SUPPLIER WHERE SOUNDEX(S_name) = SOUNDEX('BLOKE');
+SELECT S_name, 
+    CASE 
+        WHEN Status = 10 THEN 'Ten'
+        WHEN Status = 20 THEN 'Twenty'
+        WHEN Status = 30 THEN 'Thirty'
+        ELSE 'Other'
+    END AS StatusName
+FROM SUPPLIER;
+SELECT DAYNAME(CURDATE()) AS CurrentDay;
