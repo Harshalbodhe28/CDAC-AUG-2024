@@ -1,0 +1,29 @@
+use assignments;
+#1) Pairs of Salespeople Living in the Same City
+#To get pairs of salespeople who live in the same city, excluding combinations of the same salesperson and duplicate rows, you can use a self-join:
+
+SELECT 
+    s1.Sname AS salesperson_1, 
+    s2.Sname AS salesperson_2,
+    s1.City
+FROM 
+    salespeople s1
+JOIN 
+    salespeople s2 ON s1.City = s2.City
+WHERE 
+    s1.Snum < s2.Snum;  -- Ensure no duplicates and exclude self-pairing
+#2) Customers with the Same Rating as Hoffman
+#To find customers with the same rating as "Hoffman," you'll first need to determine Hoffman’s rating and then find customers with that rating:
+
+
+SELECT 
+    c.Cname, 
+    c.city
+FROM 
+    customers c
+JOIN 
+    (SELECT Rating 
+     FROM customers 
+     WHERE Cname = 'Hoffman') AS hoffman_rating 
+ON 
+    c.rating = hoffman_rating.Rating;

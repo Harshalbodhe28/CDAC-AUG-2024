@@ -1,0 +1,29 @@
+use assignments;
+#1) Insert Values into the Salespeople Table
+#To insert the specified values into the salespeople table:
+
+
+INSERT INTO salespeople (city, Sname, Comm, Snum) 
+VALUES ('San Jose', 'Blanco', NULL, 1100);
+#2) Remove All Orders from Customer Clemens
+#To delete all orders associated with the customer named "Clemens":
+
+select * from orders;
+SET SQL_SAFE_UPDATES = 0;
+
+DELETE FROM orders 
+WHERE Cnum = (SELECT Cnum FROM customers WHERE Cname = 'Clemens');
+#3) Increase the Rating of All Customers in Rome
+#To increase the rating of all customers located in Rome by 100:
+select * from customers;
+CREATE TEMPORARY TABLE TempCustomers AS
+SELECT Cnum 
+FROM customers 
+WHERE city = 'Rome';
+
+#4) Assign Customers of Salesperson Serres to Motika
+#To reassign all customers from salesperson "Serres" to "Motika":
+
+UPDATE customers 
+SET Snum = (SELECT Snum FROM salespeople WHERE Sname = 'Motika') 
+WHERE Snum = (SELECT Snum FROM salespeople WHERE Sname = 'Serres');

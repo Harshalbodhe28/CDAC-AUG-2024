@@ -1,0 +1,46 @@
+use assignments;
+#1) Customers with Ratings Equal to or Greater than Any of Serres’
+#To select all customers whose ratings are equal to or greater than any of Serres' ratings:
+
+SELECT 
+    c.Cname, 
+    c.Rating
+FROM 
+    customers c
+WHERE 
+    c.Rating >= ANY (SELECT Rating FROM customers WHERE Cname = 'Serres');
+#2) Salespeople with No Customers in Their City
+#To find all salespeople who have no customers located in their city:
+
+SELECT 
+    s.Sname
+FROM 
+    salespeople s
+WHERE 
+    s.Snum NOT IN (SELECT c.Snum FROM customers c WHERE c.city = s.city);
+#3) Orders for Amounts Greater than Any for Customers in London
+#To select all orders for amounts greater than any for the customers located in London:
+
+SELECT 
+    o.Onum, 
+    o.Amt
+FROM 
+    orders o
+WHERE 
+    o.Amt > ANY (SELECT o2.Amt FROM orders o2 
+                     JOIN customers c ON o2.Cnum = c.Cnum 
+                     WHERE c.city = 'London');
+#4) Orders for Amounts Greater than the Maximum Amount for Customers in London
+#Using MAX to achieve a similar result:
+
+SELECT 
+    o.Onum, 
+    o.Amt
+FROM 
+    orders o
+WHERE 
+    o.Amt > (SELECT MAX(o2.Amt) 
+              FROM orders o2 
+              JOIN customers c ON o2.Cnum = c.Cnum 
+              WHERE c.city = 'London');
+

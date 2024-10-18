@@ -1,0 +1,36 @@
+use assignments;
+#1) Order number, salesperson number, and commission
+SELECT 
+    Onum,
+    Snum,
+    amt * 0.12 AS commission
+FROM 
+    orders;
+#2) Highest rating in each city with formatted output
+
+SELECT 
+    CONCAT('For the city ', city, ', the highest rating is : ', MAX(rating)) AS output
+FROM 
+    customers
+GROUP BY 
+    city;
+#3) Customers in descending order of rating
+SELECT 
+    Rating, 
+    Cname, 
+    Cnum
+FROM 
+    customers
+ORDER BY 
+    rating DESC;
+#4) Total orders for each day in descending order
+
+SELECT 
+    Odate, 
+    SUM(Amt) AS total_orders
+FROM 
+    orders
+GROUP BY 
+    Odate
+ORDER BY 
+    total_orders DESC;

@@ -1,0 +1,53 @@
+use assignments;
+#1) Orders for the Customer Named Cisneros
+#To retrieve all orders for the customer named "Cisneros" without knowing his customer number, you can use a subquery
+
+SELECT 
+    o.Onum, 
+    o.Odate, 
+    o.Amt
+FROM 
+    orders o
+WHERE 
+    o.Cnum = (SELECT c.Cnum FROM customers c WHERE c.Cname = 'Cisneros');
+#2) Names and Ratings of Customers with Above-Average Orders
+#To find customers who have above-average order amounts, you can use a subquery to calculate the average order amount:
+
+SELECT 
+    c.Cnum, 
+    c.Rating
+FROM 
+    customers c
+WHERE 
+    c.Cnum IN (
+        SELECT 
+            o.Cnum 
+        FROM 
+            orders o
+        GROUP BY 
+            o.Cnum
+        HAVING 
+            SUM(o.Amt) > (SELECT AVG(total_amount) FROM (
+                SELECT 
+                    SUM(o.Amt) AS total_amount 
+                FROM 
+                    orders o 
+                GROUP BY 
+                    o.Cnum
+            ) AS avg_orders)
+    );
+#3) Total Amount in Orders for Each Salesperson Greater than the Largest Order
+#To select the total amount in orders for each salesperson whose total is greater than the largest single order amount, use:
+
+SELECT 
+    s.Sname, 
+    SUM(o.Amt) AS total_orders
+FROM 
+    salespeople s
+JOIN 
+    orders o ON s.Snum = o.Snum
+GROUP BY 
+    s.Sname
+HAVING 
+    SUM(o.Amt) > (SELECT MAX(o.Amt) FROM orders o);
+

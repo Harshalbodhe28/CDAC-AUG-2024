@@ -1,0 +1,45 @@
+use assignments;
+#1) Insert Salespeople with More Than One Customer into Multicust
+#To insert all salespeople who have more than one customer into the Multicust table:
+SET SQL_SAFE_UPDATES = 0;
+CREATE TABLE Multicust (
+    Snum INT PRIMARY KEY,        -- Assuming Snum is the primary key
+    Sname VARCHAR(255),          -- Adjust size based on your needs
+    city VARCHAR(100),           -- Adjust size based on your needs
+    comm DECIMAL(10, 2),         -- Adjust type and precision as needed
+    Cnum INT                     -- Assuming this is the customer number
+);
+
+
+INSERT INTO Multicust (Snum, Sname, city, comm)  -- Removed Cnum
+SELECT s.Snum, s.Sname, s.city, s.comm
+FROM salespeople s
+WHERE s.Snum IN (
+    SELECT c.Snum  -- Ensure you select the correct field from customers
+    FROM customers c
+    GROUP BY c.Snum 
+    HAVING COUNT(*) > 1
+);
+#2) Delete All Customers with No Current Orders
+#To delete customers who do not have any current orders:
+SET SQL_SAFE_UPDATES = 0;
+
+
+DELETE FROM customers 
+WHERE Cnum NOT IN (
+    SELECT DISTINCT Cnum 
+    FROM orders
+);
+#3) Increase Commissions of Salespeople with Total Orders Above Rs. 3,000
+#To increase the commissions of all salespeople whose total orders exceed Rs. 3,000 by twenty percent:
+SET SQL_SAFE_UPDATES = 0;
+
+
+UPDATE salespeople s
+SET s.comm = s.comm * 1.20
+WHERE s.Snum IN (
+    SELECT o.Snum 
+    FROM orders o 
+    GROUP BY o.Snum 
+    HAVING SUM(o.Amt) > 3000
+);

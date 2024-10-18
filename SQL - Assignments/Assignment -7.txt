@@ -1,0 +1,37 @@
+use assignments;
+show tables;
+select * from orders;
+select * from customers;
+select * from service;
+select * from customerss;
+#1) Count all orders for October 3
+SELECT COUNT(*) AS total_orders
+FROM orders
+WHERE Odate = '1990-10-03';
+#2) Count the number of different non-NULL city values in the Customers table
+
+SELECT COUNT(DISTINCT city) AS unique_cities
+FROM customers
+WHERE city IS NOT NULL;
+#3) Select each customer’s smallest order
+
+SELECT c.Cnum, MIN(o.Amt) AS smallest_order
+FROM customers c
+JOIN orders o ON c.Cnum = o.Cnum
+GROUP BY c.Cnum;
+#4) Select the first customer whose name begins with G (alphabetically)
+
+SELECT *
+FROM customers
+WHERE Cname LIKE 'G%'
+ORDER BY Cname
+LIMIT 1;
+#5) Select the highest rating in each city
+
+SELECT City, MAX(Rating) AS highest_rating
+FROM customers
+GROUP BY city;
+#6) Count the number of salespeople registering orders for each day
+SELECT Odate, COUNT(DISTINCT Snum) AS unique_salespeople
+FROM orders
+GROUP BY Odate;
